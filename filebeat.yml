@@ -1,6 +1,6 @@
 filebeat.inputs:
 - type: filestream 
-  paths: /path/to/logs.json
+  paths: /tmp/worker/logs/*.json
   parsers:
     - ndjson:
       overwrite_keys: true 

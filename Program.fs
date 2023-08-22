@@ -34,7 +34,7 @@ let configureLogging () =
       .WriteTo.Console(new EcsTextFormatter())
       .WriteTo.File(
         new EcsTextFormatter(),
-        "/tmp/worker/log.json",
+        "/tmp/worker/logs/log.json",
         ?rollingInterval = Some RollingInterval.Minute,
         ?retainedFileCountLimit = Some 3)
       .ReadFrom.Configuration(configuration)

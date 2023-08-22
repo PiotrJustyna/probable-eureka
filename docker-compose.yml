@@ -31,12 +31,15 @@ services:
     image: docker.elastic.co/beats/filebeat:8.8.1
     volumes:
       - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./logs:/tmp/worker/logs/
     labels:
       - co.elastic.logs/json.overwrite_keys=true
       - co.elastic.logs/json.add_error_key=true
       - co.elastic.logs/json.expand_keys=true
     depends_on:
       - kibana
+    networks:
+      - elastic
 
   worker:
     container_name: worker-instance
@@ -60,3 +63,5 @@ networks:
 volumes:
   elasticsearch-data:
   .:
+  filebeat.yml:
+  logs:
