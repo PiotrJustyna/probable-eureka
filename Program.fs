@@ -9,7 +9,8 @@ open Serilog
 open Serilog.Context
 open Serilog.Configuration
 open Serilog.Exceptions
-open Serilog.Sinks.Elasticsearch
+open Serilog.Sinks.File
+open Elastic.CommonSchema.Serilog
 
 let configureLogging () =
   let environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
@@ -28,9 +29,14 @@ let configureLogging () =
     loggerEnrichmentConfiguration
       .Enrich.FromLogContext()
       .Enrich.WithExceptionDetails()
-      .WriteTo.Debug()
-      .WriteTo.Console()
       .Enrich.WithProperty("Environment", environment)
+      .WriteTo.Debug(new EcsTextFormatter())
+      .WriteTo.Console(new EcsTextFormatter())
+      .WriteTo.File(
+        new EcsTextFormatter(),
+        "/tmp/worker/log.json",
+        ?rollingInterval = Some RollingInterval.Minute,
+        ?retainedFileCountLimit = Some 3)
       .ReadFrom.Configuration(configuration)
       .CreateLogger()
 
@@ -38,17 +44,17 @@ let configureLogging () =
 
 [<EntryPoint>]
 let main argv =
-    let hostBuilder = Host.CreateDefaultBuilder(argv)
+  let hostBuilder = Host.CreateDefaultBuilder(argv)
 
-    configureLogging ()
+  configureLogging ()
 
-    let host =
-        hostBuilder
-            .ConfigureServices(fun hostContext services -> 
-                services.AddHostedService<SampleFSharpWorker.Workers.Worker>() |> ignore
-            )
-            .UseSerilog()
-            .Build()
-            .Run()
-    
-    0
+  let host =
+    hostBuilder
+      .ConfigureServices(fun hostContext services -> 
+        services.AddHostedService<SampleFSharpWorker.Workers.Worker>() |> ignore
+      )
+      .UseSerilog()
+      .Build()
+      .Run()
+  
+  0
