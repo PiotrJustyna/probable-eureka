@@ -1,6 +1,6 @@
 # probable-eureka
 
-f# + filebeat + elasticsearch + kibana
+f# + filebeat + elasticsearch + kibana + docker-compose
 
 ## communication diagram
 
