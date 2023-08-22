@@ -53,6 +53,24 @@ Kibana:
 
 ![kibana](./img/kibana.png)
 
+## how to use
+
+* `./start-development-environment.sh`
+* `./stop-development-environment.sh`
+* `./build.sh`
+* `./run.sh`
+* `./nuke-development-environment.sh`
+
+### kibana
+
+* http://localhost:5601/app/discover#/?_g=()
+* main menu -> analytics -> discover
+* create data view
+  * index name
+  * index pattern
+  * timestamp field
+  * save data view to kibana
+
 ## resources used
 
 * https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose - looks like filebeat goes directly to elasticsearch. It should be logstash instead.
