@@ -137,6 +137,10 @@ The worked is outputting logs in the ECS (Elastic Common Schema) format:
 }
 ```
 
+Rolling log files:
+
+![rolling log files](./img/rolling-file.png)
+
 ## resources used
 
 * https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose - looks like filebeat goes directly to elasticsearch. It should be logstash instead.
