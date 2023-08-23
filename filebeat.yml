@@ -13,8 +13,9 @@ processors:
   - add_docker_metadata: ~
   - add_kubernetes_metadata: ~
 
+output.elasticsearch.index: "ls-sbs-poc"
 output.elasticsearch:
   hosts: ["http://elasticsearch:9200"]
 
-setup.kibana:
-  host: "localhost:5601" 
+setup.template.name: "ls-sbs-poc"
+setup.template.pattern: "ls-sbs-poc"
